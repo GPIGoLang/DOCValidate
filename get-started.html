@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
 <!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
@@ -70,127 +72,8 @@
       <!-- Portfolio Section -->
       <!--h2>Portfolio Heading</h2-->
 
-      <div class="row">
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">FLSC</a>
-              </h4>
-              <hr>
-              <p class="card-text"> N5000 </p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">NYSC</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Undergraduate </a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">P.G. Degree</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Professional Cert.</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Others</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Other</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 portfolio-item">
-          <div class="card h-60">
-            <a href="#"></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Others</a>
-              </h4>
-              <hr>
-              <p class="card-text">N5000</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Select</a>
-            </div>
-          </div>
-        </div>
+      <div class="row" id="listBox">
+        
       </div>
 
 
@@ -245,6 +128,122 @@
       $(document).ready(function() {
         appMaster.preLoader();
       });
+    </script>
+
+<script type="text/javascript">
+    (function() {
+
+        var list = ''; // For building up the html of the retrieved data
+        var vBasket = '';
+        var vBasketIds = new Array();
+
+        if (localStorage.getItem('vBasket')) {
+            vBasket = localStorage.getItem('vBasket')
+            vBasket = JSON.parse(vBasket)
+
+            $.each(vBasket, function(index, value) {
+                vBasketIds.push(value.id)
+            })
+        }
+
+        $.get('http://localhost:7788/list', function(listItems) {
+
+            for (i in listItems) {
+
+                var item = listItems[i]
+
+                list += "<div class='col-lg-3 col-sm-6 portfolio-item'>"
+                list += "<div class='card h-60'>"
+                list += "<a href='javascript:;'></a>"
+                list += "<div class='card-body'>"
+                list += "<h4 class='card-title'>"
+                list += "<a href='javascript:;'>"+item.name+"</a>"
+                list += "</h4>"
+                list += "<hr>"
+                list += "<p class='card-text'>₦ "+item.price.toLocaleString('en')+"</p>"
+                list += "</div>"
+                list += "<div class='card-footer'>"
+                list += "<a href='javascript:;' class='btn btn-primary'>Select</a>"
+                list += "</div>"
+                list += "</div>"
+                list += "</div>"
+
+
+                // list += "<li class=\"mt-list-item\">"
+                // list += "<div class=\"list-icon-container done\">"
+                // list += "<div class=\"icheck-list\">"
+                // list += "<label>"
+
+                // if (vBasketIds.length > 0) {
+                //     if (vBasketIds.indexOf(item.id) !== -1) {
+                //         list += "<input type=\"checkbox\" checked id=\"" + item.id + "\" name=\"" + item.name.toLowerCase() + "\" class=\"icheck\" value=\"" + item.id + "\" >"
+                //     } else {
+                //         list += "<input type=\"checkbox\" id=\"" + item.id + "\" name=\"" + item.name.toLowerCase() + "\" class=\"icheck\" value=\"" + item.id + "\">"
+                //     }
+                // } else {
+                //     list += "<input type=\"checkbox\" id=\"" + item.id + "\" name=\"" + item.name.toLowerCase() + "\" class=\"icheck\" value=\"" + item.id + "\">"
+                // }
+
+                // list += "</label>"
+                // list += "</div>"
+                // list += "</div>"
+                // list += "<div class=\"list-item-content\">"
+                // list += "<h3 class=\"uppercase bold\">"
+                // list += "<a href=\"javascript:;\">₦ " + item.price.toLocaleString('en') + "</a>"
+                // list += "</h3>"
+                // list += "<p>" + item.name + "</p>"
+                // list += "<small><i>" + item.description + "</i></small>"
+                // list += "</div>"
+                // list += "</li>"
+            }
+
+            $('#listBox').append(list)
+
+        });
+
+    })()
+</script>
+
+    <script>
+        (function() {
+            // toastr.options = {
+            //     "closeButton": true,
+            //     "debug": false,
+            //     "positionClass": "toast-top-full-width",
+            //     "onclick": null,
+            //     "showDuration": "1000",
+            //     "hideDuration": "1000",
+            //     "timeOut": "5000",
+            //     "extendedTimeOut": "1000",
+            //     "showEasing": "swing",
+            //     "hideEasing": "linear",
+            //     "showMethod": "fadeIn",
+            //     "hideMethod": "fadeOut"
+            // }
+
+
+            // $('.checkout').on('click', function(e) {
+            //     e.preventDefault()
+
+            //     var values = {};
+            //     $.each($("#requestForm").serializeArray(), function(i, field) {
+            //         values[i] = {
+            //             id: field.value,
+            //             name: field.name
+            //         }
+            //     });
+
+            //     if (Object.keys(values).length === 0) {
+            //         // toastr.error("Pleast select at least an item to proceed.", "Error")
+            //         alert("Pleast select at least an item to proceed.")
+            //     } else {
+            //         localStorage.setItem("vBasket", JSON.stringify(values))
+            //         setTimeout(() => {
+            //             window.location.href = "http://localhost:8080/checkout.html"
+            //         }, 2000)
+            //     }
+            // })
+        })()
     </script>
 
   </body>
